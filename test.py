@@ -7,6 +7,7 @@ import torch
 import architecture as arch
 
 model_path = sys.argv[1]  # models/RRDB_ESRGAN_x4.pth OR models/RRDB_PSNR_x4.pth
+output_file = sys.argv[2]
 device = torch.device('cuda')  # if you want to run on CPU, change 'cuda' -> cpu
 # device = torch.device('cpu')
 
@@ -37,4 +38,4 @@ for path in glob.glob(test_img_folder):
     output = model(img_LR).data.squeeze().float().cpu().clamp_(0, 1).numpy()
     output = np.transpose(output[[2, 1, 0], :, :], (1, 2, 0))
     output = (output * 255.0).round()
-    cv2.imwrite('\\drive\\My Drive\\{:s}.png'.format(base), output)
+    cv2.imwrite(output_file.format(base), output)
