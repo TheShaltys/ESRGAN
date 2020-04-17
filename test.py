@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import torch
 import architecture as arch
+from datetime import datetime
 
 model_path = sys.argv[1]  # models/RRDB_ESRGAN_x4.pth OR models/RRDB_PSNR_x4.pth
 output_file = sys.argv[2]
@@ -27,7 +28,10 @@ idx = 0
 for path in glob.glob(test_img_folder):
     idx += 1
     base = os.path.splitext(os.path.basename(path))[0]
-    print(idx, base)
+    now = datetime.now()
+    dt_string = now.strftime("%H:%M:%S")
+    
+    print(idx, base, dt_string)
     # read image
     img = cv2.imread(path, cv2.IMREAD_COLOR)
     img = img * 1.0 / 255
